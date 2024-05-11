@@ -38,6 +38,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+      if: ${{ hashFiles('tests/') != '' }}
     - name: Run Pyinstaller to create release
       run: |
         pyinstaller -y run.py
