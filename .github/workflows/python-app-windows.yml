@@ -6,6 +6,8 @@ name: lint-test-package-release Python application
 on:
   push:
     branches: [ "master" ]
+    tags:
+      - '*'
 
 permissions:
   contents: write
