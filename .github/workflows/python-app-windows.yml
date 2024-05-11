@@ -40,19 +40,14 @@ jobs:
     - name: Run Pyinstaller to create release
       run: |
         pyinstaller -y run.py
-    - name: zip release
+    - name: Zip the artifact
       uses: vimtor/action-zip@v1.2
       with:
         files: dist/run
         dest: simulator-windows.zip
-    - name: Get short SHA
-      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
-    - name: Print short SHA
-      run: echo "Short SHA is ${{ env.SHORT_SHA }}"
-    - name: Upload to Release
-      uses: ncipollo/release-action@v1
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        tag: ${{ env.SHORT_SHA }}
-        commit: ${{ env.SHORT_SHA }}
-        artifacts: "simulator-windows.zip"
-        bodyFile: "README.md"
+        files: |
+          simulator-windows.zip
