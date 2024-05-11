@@ -47,6 +47,13 @@ jobs:
       with:
         files: dist/run
         dest: simulator-windows.zip
+    - name: Upload the artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.sha }}
+        path: simulator-windows.zip
+        if-no-files-found: error
+        overwrite: true
     - name: Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
