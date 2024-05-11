@@ -5,6 +5,7 @@ import argparse
 
 import serial
 
+
 def get_screen_size() -> Tuple[int, int]:
     # Using tkinter to get screen size
     import tkinter as tk
