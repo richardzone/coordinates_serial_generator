@@ -45,10 +45,15 @@ jobs:
       with:
         files: dist/run
         dest: simulator-windows.zip
+    - name: Set tag name
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+    - name: Check tag name
+      run: echo ${{ steps.vars.outputs.sha_short }}
     - name: Upload to Release
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ github.sha }}
-        commit: ${{ github.sha }}
+        tag: ${{ steps.vars.outputs.sha_short }}
+        commit: ${{ steps.vars.outputs.sha_short }}
         artifacts: "simulator-windows.zip"
         bodyFile: "README.md"
