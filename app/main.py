@@ -28,11 +28,12 @@ def main():
     port = args.port
 
     screen_width, screen_height = get_screen_size()
-    with serial.Serial(port, 9600, timeout=1) as ser:
+    with serial.Serial(port, 9600, timeout=0) as ser:
         while True:
             coordinates = list(generate_random_coordinates(screen_width, screen_height))
             encoded_text = str(coordinates).encode()
             ser.write(str(coordinates).encode())
+            ser.flush()
             print(f"Sent to {port}: {encoded_text}\n")
             time.sleep(random.uniform(0.5, 4))
 
