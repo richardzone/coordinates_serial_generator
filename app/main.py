@@ -43,9 +43,13 @@ def main():
     parser = argparse.ArgumentParser(description='Serial communication emulator')
     parser.add_argument('--port', default='COM2', help='Serial port (default: COM2)')
     parser.add_argument('--rate', type=int, default=9600, help='Baud rate (default: 9600)')
+    parser.add_argument('--min-interval', type=int, default=500, help='Min interval in milliseconds between commands (default: 500)')
+    parser.add_argument('--max-interval', type=int, default=4000, help='Max interval in milliseconds between commands (default: 4000)')
     args, _ = parser.parse_known_args()
     port = args.port
     rate = args.rate
+    min_interval = args.min_interval
+    max_interval = args.max_interval
 
     screen_width, screen_height = get_screen_size()
     commands: List[Command] = [
@@ -54,13 +58,17 @@ def main():
         CalibrationDoneCommand()
     ]
 
+    # Assign weights for each command
+    weights = [1, 1, 1]
+
     with serial.Serial(port, rate, timeout=0) as ser:
         while True:
-            command = random.choice(commands)
+            # Choose a command based on the assigned weights
+            command = random.choices(commands, weights=weights)[0]
             command_str = command.get_command()
             ser.write(command_str.encode())
-            # ser.flush()
-            sleep_duration = random.uniform(0.5, 4)
+            ser.flush()
+            sleep_duration = random.uniform(min_interval / 1000, max_interval / 1000)
             print(f"Sent to {port}: {command_str}. Now sleeping for {sleep_duration:.2f} seconds\n")
             time.sleep(sleep_duration)
 
