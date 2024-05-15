@@ -24,17 +24,17 @@ class RandomCoordinatesCommand(Command):
 
     def get_command(self) -> str:
         coordinates = self.generate_random_coordinates()
-        return str(coordinates)
+        return str(coordinates) + "\n"
 
 
 class CalibrationRequiredCommand(Command):
     def get_command(self) -> str:
-        return "calibration_required"
+        return "calibration_required\n"
 
 
 class CalibrationDoneCommand(Command):
     def get_command(self) -> str:
-        return "calibration_done"
+        return "calibration_done\n"
 
 
 def get_screen_size() -> Tuple[int, int]:
@@ -88,11 +88,9 @@ def main():
             command = random.choices(commands, weights=weights)[0]
             command_str = command.get_command()
             ser.write(command_str.encode())
-            ser.flush()
             sleep_duration = random.uniform(min_interval / 1000, max_interval / 1000)
-            print(
-                f"Sent to {port}: {command_str}. Now sleeping for {sleep_duration:.2f} seconds\n"
-            )
+            print(f"Sent to {port}: {command_str}")
+            print(f"Now sleeping for {sleep_duration:.2f} seconds\n")
             time.sleep(sleep_duration)
 
 
