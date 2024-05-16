@@ -1,5 +1,9 @@
 # Coordinates Serial Generator
 
+[![Python Version Badge](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Frichardzone%2Fcoordinates_serial_generator%2Fmaster%2Fpyproject.toml)](https://github.com/richardzone/coordinates_serial_generator/blob/master/pyproject.toml)
+[![Build Test Upload Status Badge](https://img.shields.io/github/actions/workflow/status/richardzone/coordinates_serial_generator/python-app-windows.yml?label=Build%20Test%20Upload)](https://github.com/richardzone/coordinates_serial_generator/actions)
+[![Code Coverage Badge](https://img.shields.io/codecov/c/github/richardzone/coordinates_serial_generator?label=Code%20Coverage)](https://app.codecov.io/gh/richardzone/coordinates_serial_generator)
+
 This app will emulate eye tracker hardware and send commands to serial port.
 
 Specifically, this app does the following:
